@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monish R S | Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0c0c0e;
+            --text-main: #ffffff;
+            --text-muted: #8a8a93;
+            --card-profile: #16161a; /* Changed from white to midnight charcoal */
+            --card-orange: #f26440;
+            --card-lime: #ccff00;
+            --card-dark: #1a1a1f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(242, 100, 64, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(204, 255, 0, 0.12) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 4rem 2rem;
+            overflow-x: hidden;
+        }
+
+        .portfolio-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 4.5rem;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        /* --- Dotted Background Accents --- */
+        .portfolio-container::before {
+            content: '';
+            position: absolute;
+            top: -20px; right: -20px;
+            width: 80px; height: 80px;
+            background-image: radial-gradient(#2d2d30 2px, transparent 2px);
+            background-size: 10px 10px;
+            z-index: -1;
+        }
+
+        /* --- Left Column: Profile Card --- */
+        .profile-card {
+            background-color: var(--card-profile);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 2rem;
+            color: var(--text-main);
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 4rem;
+            z-index: 2;
+        }
+
+        .img-wrapper {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background-color: #2a110a; 
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .img-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .profile-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin-bottom: 0.2rem;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        
+        .profile-subtitle {
+            font-size: 0.95rem;
+            color: #a0a0a8;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .decor-line {
+            width: 100%;
+            height: 40px;
+            margin: 0.5rem 0;
+            background-image: radial-gradient(circle at center, var(--card-orange) 2px, transparent 2.5px);
+            background-size: 12px 12px;
+            background-position: center;
+            background-repeat: repeat-x;
+            position: relative;
+        }
+        
+        .decor-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-orange);
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(242, 100, 64, 0.4);
+        }
+
+        .profile-card p.bio {
+            color: #d0d0d5;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin: 1rem 0 1.5rem 0;
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            font-size: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            color: var(--card-orange);
+        }
+
+        /* Tooltip for IG */
+        .instagram-wrapper { position: relative; }
+        .instagram-wrapper::after {
+            content: '@broscallme.rs';
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: var(--card-orange);
+            color: #ffffff;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 5px 15px rgba(242, 100, 64, 0.3);
+        }
+        .instagram-wrapper:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* --- Right Column: Main Content --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3.2rem, 6vw, 6rem);
+            line-height: 0.85;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -3px;
+        }
+
+        .hero-title .solid { color: var(--text-main); }
+        .hero-title .muted { color: #2a2a2f; text-shadow: 1px 1px 0 rgba(255,255,255,0.05); }
+
+        .intro-text {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            line-height: 1.6;
+            max-width: 650px;
+            font-weight: 400;
+        }
+
+        /* Stats Section */
+        .stats-grid { display: flex; gap: 4.5rem; }
+        .stat-item h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #8a8a93);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-item p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        /* Bento Cards Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .bento-card {
+            border-radius: 24px;
+            padding: 2.2rem;
+            position: relative;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .bento-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+
+        /* Restoring Original Vibrant Styles */
+        .card-orange {
+            background: linear-gradient(135deg, var(--card-orange), #ff7a53);
+            color: #fff;
+        }
+        /* Wave Pattern */
+        .card-orange::before {
+            content: ''; position: absolute; inset: 0; opacity: 0.4;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,100 C150,200 250,0 400,100 C550,200 650,0 800,100' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' opacity='0.2'/%3E%3C/svg%3E");
+            background-size: cover; z-index: 0;
+        }
+
+        .card-lime {
+            background: linear-gradient(135deg, var(--card-lime), #daff33);
+            color: #0c0c0e;
+        }
+        /* ZigZag Pattern */
+        .card-lime::before {
+            content: ''; position: absolute; inset: 0; opacity: 0.3;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='0,150 100,50 200,200 300,50 400,150' fill='none' stroke='black' stroke-width='4' opacity='0.2'/%3E%3C/svg%3E");
+            background-size: cover; z-index: 0;
+        }
+
+        .card-dark {
+            background: var(--card-dark);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: #fff;
+            justify-content: flex-start;
+            min-height: auto;
+        }
+
+        .card-icon { font-size: 2.2rem; position: absolute; top: 2.2rem; left: 2.2rem; opacity: 0.95; z-index: 1; }
+        .card-dark .card-icon { position: relative; top: 0; left: 0; margin-bottom: 1rem; }
+
+        .bento-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            width: 85%;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+        
+        .card-dark h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .card-dark p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+
+        .arrow-btn {
+            position: absolute;
+            bottom: 2.2rem;
+            right: 2.2rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1.5px solid currentColor;
+            color: currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .bento-card:hover .arrow-btn { background: currentColor; transform: scale(1.05); }
+        .card-orange:hover .arrow-btn { color: var(--card-orange); background: #fff; border-color: #fff; }
+        .card-lime:hover .arrow-btn { color: var(--card-lime); background: #0c0c0e; border-color: #0c0c0e; }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+        .repo-list { list-style: none; margin-top: 1rem; }
+        .repo-list li { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; font-size: 0.9rem; color: #ccc; }
+        .repo-list li i { color: var(--text-muted); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .portfolio-container { grid-template-columns: 1fr; gap: 4rem; }
+            .profile-card { max-width: 420px; margin: 0 auto; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 1.5rem; }
+            .stats-grid { flex-direction: column; gap: 2rem; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portfolio-container">
+        
+        <!-- Left Profile Card -->
+        <div class="profile-card">
+            <div class="img-wrapper">
+                <!-- Using EXACT local file name -->
+                <img src="mikasa.png" alt="Monish R S Profile Picture">
+            </div>
+            <h2>Monish R S</h2>
+            
+            <div class="profile-subtitle">
+                Student at Chennai Institute of Technology<br>
+                <i class="fa-solid fa-location-dot" style="margin-right: 4px; margin-top: 6px;"></i> Chennai, India
+            </div>
+            
+            <div class="decor-line">
+                <div class="decor-icon"><i class="fa-solid fa-fire"></i></div>
+            </div>
+            
+            <p class="bio">A Software Developer who builds innovative digital & hardware systems.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/MonishRS45" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/monish-r-s/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/broscallme.rs" target="_blank" aria-label="Instagram" class="instagram-wrapper">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Content Section -->
+        <div class="main-content">
+            <h1 class="hero-title">
+                <span class="solid">SOFTWARE</span><br>
+                <span class="muted">ENGINEER</span>
+            </h1>
+            
+            <p class="intro-text">
+                Specializing in full-stack development, AI integrations, and real-world IoT systems. Transforming complex logic into highly interactive, scalable experiences.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>~5</h3>
+                    <p>Hackathons<br>Participated</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+300</h3>
+                    <p>DSA Problems<br>Solved</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+2</h3>
+                    <p>Concurrent<br>Degrees</p>
+                </div>
+            </div>
+
+            <div class="bento-grid">
+                <a href="https://github.com/MonishRS45" target="_blank" class="bento-card card-orange">
+                    <i class="fa-solid fa-layer-group card-icon"></i>
+                    <h3>C++, PYTHON, MYSQL & DSA</h3>
+                    <span class="arrow-btn"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                
+                <a href="https://github.com/MonishRS45/Print_shop_Facilitator" target="_blank" class="bento-card card-lime">
+                    <i class="fa-solid fa-microchip card-icon"></i>
+                    <h3>AI, IOT, NEXT.JS & HACKATHONS</h3>
+                    <span class="arrow-btn"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <a href="https://github.com/MonishRS45/debris-guard-IEEE-ClimateChain" target="_blank" class="bento-card card-dark">
+                    <i class="fa-solid fa-water card-icon" style="color: #3b82f6;"></i>
+                    <h3>Debris Guard</h3>
+                    <p>Autonomous ocean ghost net detection and trajectory modeling platform for IEEE ClimateChain.</p>
+                    <div class="tags">
+                        <span class="tag">YOLOv8</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Web3</span>
+                    </div>
+                </a>
+
+                <div class="bento-card card-dark">
+                    <i class="fa-solid fa-code-branch card-icon" style="color: #a855f7;"></i>
+                    <h3>Open Source Repos</h3>
+                    <ul class="repo-list">
+                        <li><i class="fa-solid fa-book-open"></i> <strong>public-apis</strong></li>
+                        <li><i class="fa-solid fa-chart-pie"></i> <strong>peer-review-analytics</strong></li>
+                        <li><i class="fa-brands fa-python"></i> <strong>python-assignment</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
